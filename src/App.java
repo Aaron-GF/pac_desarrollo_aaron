@@ -100,16 +100,19 @@ public class App {
             (userOption.equals("tijera") && jigsawOption.equals("papel")) 
         ) {
             keys++;
-            Typing.slow("\n[JIGSAW]: Has tomado la decisión correcta...\n", 30);
+            Typing.slow("\n[JIGSAW]: Has tomado la decisión correcta... + 🔑\n", 30);
         } 
         else {
             lives--;
-            Typing.slow("\n[JIGSAW]: Una mala decisión tiene consecuencias...\n", 30);
+            Typing.slow("\n[JIGSAW]: Una mala decisión tiene consecuencias... - ♥️\n", 30);
         }
         }
         if(lives == 0) {
+            Typing.slow(AsciiArt.lostGame(), 1);
             Typing.slow("\n[JIGSAW]: Tu tiempo se ha agotado... Fin del juego!\n", 50);
         } else {
+            Typing.slow("\nLLAVES CONSEGUIDAS: " + keys + "/3" + " 🔑\n", 20);
+            Typing.slow(AsciiArt.winGame(), 1);
             Typing.slow("\n[JIGSAW]: Felicidades, " + name + ". Has demostrado que valoras tu vida... por ahora.\n", 50);
         }
         sc.close();
