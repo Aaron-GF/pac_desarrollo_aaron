@@ -38,26 +38,45 @@ public class App {
 
         Typing.slow(AsciiArt.startGame(), 1);
 
-        String userOption; 
+        int lives = 3;
+        int keys = 0;
+
+        while(lives > 0 && keys < 3) {
+            String heart = lives == 3 ? "♥️ ♥️ ♥️" : lives == 2 ? "♥️ ♥️" : "♥️";
+            String userOption; 
         while (true) {
-            Typing.slow("\n[JIGSAW]: Debes tomar una decisión: \n", 40);
-            Typing.slow("> PIEDRA [o]", 30);
-            Typing.slow("> PAPEL  [-]", 30);
-            Typing.slow("> TIJERA [x]", 30);
+            Typing.slow("\n[JIGSAW]: Debes tomar una decisión: \n", 20);
+            Typing.slow("> PIEDRA [o]", 20);
+            Typing.slow("> PAPEL  [-]", 20);
+            Typing.slow("> TIJERA [x]", 20);
+            System.out.println(AsciiArt.divider());
+            Typing.slow("VIDAS RESTANTES: " + heart, 20);
+            Typing.slow("\nLLAVES CONSEGUIDAS: " + keys + "/3" + " 🔑", 20);
 
             userOption = sc.nextLine().trim().toLowerCase();
+            switch (userOption) {
+                case "-":
+                    userOption = "papel";
+                    break;
+                case "o":
+                    userOption = "piedra";
+                    break;
+                case "x":
+                    userOption = "tijera";
+                    break;
+            }
 
+            // Solo deja continuar si el usuario introduce una opcion válida
             if (
-                userOption.equals("o") || 
-                userOption.equals("-") || 
-                userOption.equals("x")
+                userOption.equals("piedra") || 
+                userOption.equals("papel") || 
+                userOption.equals("tijera")
             ) break; 
 
-            // Si llega aquí, es que la entrada NO fue válida
-            Typing.slow("\n[JIGSAW]: \"Cada movimiento cuenta. No malgastes tu oportunidad con errores necios.\n", 40);
+            Typing.slow("\n[JIGSAW]: \"Cada movimiento cuenta. No malgastes tu oportunidad con errores necios.\n", 30);
         }
 
-        String[] choices = {"piedra", "papel", "tijeras"};
+        String[] choices = {"piedra", "papel", "tijera"};
         int randomIndex = (int) (Math.random() * 3);
         String jigsawOption = choices[randomIndex];
 
@@ -66,36 +85,44 @@ public class App {
         System.out.println(AsciiArt.divider());
         printArt(userOption);
     
-        Typing.slow("\nJIGSAW HA ELEGIDO: ...", 60);
+        System.out.println("\nJIGSAW HA ELEGIDO: ...");
         System.out.println(AsciiArt.divider());
         Thread.sleep(500); 
         printArt(jigsawOption);
 
         // Determina el destino del jugador
         if (userOption.equals(jigsawOption)) {
-            Typing.slow("\n[JIGSAW]: Un empate... Las piezas siguen sin encajar. Nadie gana esta vez.\n", 40);
+            Typing.slow("\n[JIGSAW]: Un empate... Las piezas siguen sin encajar.\n", 30);
         } 
         else if (
-            (userOption.equals("o") && jigsawOption.equals("tijeras")) ||
-            (userOption.equals("-") && jigsawOption.equals("piedra")) ||
-            (userOption.equals("x") && jigsawOption.equals("papel")) 
+            (userOption.equals("piedra") && jigsawOption.equals("tijera")) ||
+            (userOption.equals("papel") && jigsawOption.equals("piedra")) ||
+            (userOption.equals("tijera") && jigsawOption.equals("papel")) 
         ) {
-            Typing.slow("\n[JIGSAW]: Felicidades, " + name + ". Has demostrado que valoras tu vida... por ahora.\n", 40);
+            keys++;
+            Typing.slow("\n[JIGSAW]: Has tomado la decisión correcta...\n", 30);
         } 
         else {
-            Typing.slow("\n[JIGSAW]: Tu tiempo se ha agotado. Fin del juego...\n", 60);
+            lives--;
+            Typing.slow("\n[JIGSAW]: Una mala decisión tiene consecuencias...\n", 30);
         }
-
+        }
+        if(lives == 0) {
+            Typing.slow("\n[JIGSAW]: Tu tiempo se ha agotado... Fin del juego!\n", 50);
+        } else {
+            Typing.slow("\n[JIGSAW]: Felicidades, " + name + ". Has demostrado que valoras tu vida... por ahora.\n", 50);
+        }
         sc.close();
+        
     }
 
     // Metodo auxiliar para imprimir código ASCII
     public static void printArt(String opcion) {
-        if (opcion.equals("o") || opcion.contains("piedra")) {
+        if (opcion.contains("piedra")) {
             System.out.println(AsciiArt.stone());
-        } else if (opcion.equals("-") || opcion.contains("papel")) {
+        } else if (opcion.contains("papel")) {
             System.out.println(AsciiArt.paper());
-        } else if (opcion.equals("x") || opcion.contains("tijera")) {
+        } else if (opcion.contains("tijera")) {
             System.out.println(AsciiArt.scissors());
         }
     }
