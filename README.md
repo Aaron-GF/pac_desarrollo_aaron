@@ -15,7 +15,7 @@ Aquí puedes ver el arte que da vida al juego (utilizando caracteres Braille y A
 ### 🎥 Demostración en Vivo
 ¿Quieres ver el juego en acción? Echa un vistazo a la demo:
 
-[![Ver Demo del Juego](assets/screenshot.png)](assets/demo.mp4)
+[![Ver Demo del Juego](assets/startScreen.png)](assets/demo.mp4)
 *(Haz clic en la imagen superior para reproducir el vídeo de la demo)*
 
 ---
